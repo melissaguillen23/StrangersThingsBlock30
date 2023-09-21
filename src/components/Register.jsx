@@ -1,80 +1,73 @@
-import React, { useState } from "react"
-import { registerUser } from "../API";
+import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import api from "../API/ST_API";
+import { useAuth } from "../API/Auth";
 
 export default function RegisterForm() {
-    const [register, setRegister] = useState({
-        username: '',
-        password: '',
-        passwordConfirmation: '',
-    });
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const [errorMessage, setErrorMessage] = useState('')
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const { isLoggedIn } = useAuth()
 
-    const handleChange = e => {
-        setRegister({
-            ...register,
-            [e.target.name]: e.target.value,
-        })
-    }
+    const handleRegister = async (e) => {
+        e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        
-        if (register.password !== register.passwordConfirmation) {
-            setErrorMessage('Passwords do not match')
-            return
+        if(password !== passwordConfirmation) {
+            setErrorMessage("Passwords do not match!")
+            return;
         }
 
-        const { success, error, data } = await registerUser({
-            username: register.username,
-            password: register.password,
-        })
-
-        if (success) {
-            localStorage.setItem('token', data.token)
-            console.log('Registration successful')
-            navigate('/login')
-            setRegister({
-                username: '',
-                password: '',
-                passwordConfirmation: '',
-            })
-        } else {
-            setErrorMessage(error || 'Registration failed')
+        try {
+            const response = await api.registerUser(username, password, passwordConfirmation);
+            console.log(response);
+            
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("Registration failed. Please try again.")
         }
     }
+
+    useEffect(() => {
+        if (isLoggedIn) {
+        return navigate('/')
+    }
+    }, [isLoggedIn, navigate]);
 
     return (
         <div className="register-container">
             <div className="register-form">
                 <h1>Registration Form</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleRegister}>
                     <label htmlFor="username">Username: </label>
                     <input 
                         type="text"
-                        onChange={handleChange}
+                        id="username"
+                        onChange={(e) => setUsername(e.target.value)}
                         name="username"
-                        value={register.username}
+                        value={username}
                         placeholder="username"
                         required
                     />
                     <label htmlFor="password">Password: </label>
                     <input 
                         type="password"
-                        onChange={handleChange}
+                        id="password"
+                        onChange={(e) => setPassword(e.target.value)}
                         name="password"
-                        value={register.password}
+                        value={password}
                         placeholder="password"
                         required
                     />
                     <label htmlFor="passwordConfirmation">Confirm password: </label>
                     <input 
                         type="password"
-                        onChange={handleChange}
+                        id="passwordConfirmation"
+                        onChange={(e) => setPasswordConfirmation(e.target.value)}
                         name="passwordConfirmation"
-                        value={register.passwordConfirmation}
+                        value={passwordConfirmation}
                         placeholder="confirm password"
                         required
                     />

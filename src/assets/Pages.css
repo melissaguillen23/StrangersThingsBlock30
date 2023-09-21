@@ -5,6 +5,8 @@ body {
     background-attachment: fixed;
 }
 
+/* Home Page */
+
 .home-container {
     display: flex;
     justify-content: center;
@@ -49,3 +51,153 @@ body {
 .home-text button:hover {
     background-color: #FFAABB;
 }
+
+/* Posts Page */
+
+.posts-container {
+    margin-left: 8rem;
+    margin-right: 8rem;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 15vh;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.add-post-link {
+    text-decoration: none;
+}
+
+.posts-title {
+    font-size: 50px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    text-shadow: 
+        -1px -1px 0 black,
+        1px -1px 0 black,
+        -1px 1px 0 black,
+        1px 1px 0 black;
+    font-weight: bold;
+    margin: 0;
+}
+
+.add-post {
+    padding: 0.5rem;
+    margin-left: 5rem;
+    color: white;
+    border: 1px solid white;
+    text-decoration: none;
+    background-color: rgba(151, 108, 132, 0.5);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.add-post:hover {
+    background-color: rgba(255, 255, 255, 0.845);
+}
+
+.search-bar-input {
+    padding: 0.5rem;
+    margin-right: 5rem;
+    border: 1px solid white;
+    background-color: rgba(151, 108, 132, 0.5);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="text"]::placeholder {
+    color: rgba(49, 48, 48, 0.635);
+}
+
+.post-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.post-card {
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: rgba(151, 108, 132, 0.589);
+    backdrop-filter: blur(5px) brightness(120%);
+    gap: 1rem;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+}
+
+.post-title {
+    font-size: 30px;
+    color: white;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS';
+}
+
+.post-description {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.post-details {
+    align-items: center;
+    margin: 5px;
+}
+
+.post-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.post-location {
+    font-size: 14px;
+    color: #dbd2d2;
+    margin-bottom: 10px;
+}
+
+.post-user {
+    font-size: 14px;
+    color: #dbd2d2;
+    margin-bottom: 25px;
+}
+
+.view-details-button {
+    padding: 0.5rem;
+    color: white;
+    border: 1px solid white;
+    text-decoration: none;
+    background-color: rgba(151, 108, 132, 0.5);
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin-bottom: 16px;
+}
+
+.add-post:hover {
+    background-color: rgba(255, 255, 255, 0.845);
+}
+
+@media screen and (max-width: 768px) {
+    .post-card {
+        flex-basis: calc(33.33% - 20px);
+    }
+}
+
+/* Profile Page */
+
+.profile-title {
+    font-size: 50px;
+    margin-bottom: 1rem;
+}
+

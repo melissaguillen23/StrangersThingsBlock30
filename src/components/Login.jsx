@@ -1,59 +1,53 @@
 import React, { useState } from "react"
-import { loginUser } from "../API";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"
 import '../assets/Auth.css'
+import api from '../API/ST_API'
+import { useAuth } from "../API/Auth"; 
 
 export default function LoginForm() {
-    const [credentials, setCredentials] = useState({
-        username: "",
-        password: "",
-    });
+    const [loginSuccess, setLoginSuccess] = useState(false)
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState("")
     const navigate = useNavigate()
+    const { login } = useAuth()
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-        setCredentials({
-            ...credentials,
-            [name]: value,
-        })
-    }
-
-    const handleSubmit = async (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-
+        console.log('Handling login...')
         try {
-            const response = await loginUser(
-                credentials.username,
-                credentials.password
-            )
-
-            if (response.success) {
-                navigate("/profile")
-            } else {
-                setError("Incorrect username or password")
-            }
+            const response = await api.login(username, password);
+            const token = response.data.token
+            api.setToken(token)
+            login(token)
+            setLoginSuccess(true)
+            console.log('loginSuccess:', loginSuccess)
+            setTimeout(() => setLoginSuccess(false), 3000)
+            console.log('Login successful')
+            navigate("/profile")
+            
         } catch (error) {
             console.error(error)
-            setError("An error occurred")
+            setError("Login Failed. Please try again.", error)
             }
-    }
+        }
 
     return (
         <div className="login-container">
+            {loginSuccess && <div className="success-message">Success: Successfully logged in!</div>}
             <div className="login-form">
             <h1>Login</h1>
             {error && <p className="error">{error}</p>}
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleLogin}>
                 <div>
                     <label htmlFor="username">Username:</label>
                     <input 
                         type="text" 
                         id="username"
                         name="username"
-                        value={credentials.username}
-                        onChange={handleChange}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                         minLength="6"
                     />
@@ -64,8 +58,8 @@ export default function LoginForm() {
                         type="password"
                         id="password"
                         name="password"
-                        value={credentials.password}
-                        onChange={handleChange}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                         minLength="8"
                     />

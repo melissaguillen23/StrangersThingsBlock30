@@ -1,12 +1,12 @@
 .active {
-    background-color: #FAF3F0;
+    background-color: #3F1D38;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #DBC4F0;
+  background-color: #A2678A;
   color: white;
   position: sticky;
   top: 0;
@@ -50,7 +50,7 @@ nav ul li a {
 }
 
 nav ul li a:not(.active):hover {
-    background-color: #D4E2D4;
+    background-color: #E19898;
 }
 
 nav .menu {
@@ -67,7 +67,7 @@ nav .menu {
 nav .menu span {
     height: 0.4rem;
     width: 100%;
-    background-color: #fff;
+    background-color: #3F1D38;
     border-radius: 0.2rem;
 }
 

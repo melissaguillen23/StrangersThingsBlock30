@@ -1,57 +1,70 @@
 import React, { useEffect, useState } from "react"
-import { myData } from "../API"
-import { Link } from "react-router-dom"
+import api from "../API/ST_API"
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../API/Auth";
 
 export default function Profile() {
-    const [profileData, setProfileData] = useState(null)
-    const [authenticated, setAuthenticated] = useState(false)
+    const navigate = useNavigate();
+    const [userData, setUserData] = useState(null);     
+    const { isLoggedIn } = useAuth()
+    const [error, setError] = useState('');
+
+    if (!isLoggedIn) {
+        navigate('/login')
+        return null
+    }
 
     useEffect(() => {
-        async function fetchProfileData() {
+        const fetchUserData = async () => {
             try {
-                const token = localStorage.getItem('token');
-
-                if (!token) {
-                    console.error("User is not authenticated.")
-                    setAuthenticated(false)
-                    return
-                }
-
-                const response = await myData(token)
-                if(response.success) {
-                    setProfileData(response.data)
-                    setAuthenticated(true)
-                } else {
-                    console.error("Failed to fetch user profile")
-                }
+                const response = await api.getMyData();
+                setUserData(response.data);
             } catch (error) {
-                console.error("Error fetching user profile.", error)
+                console.error(error);
+                setError("Failed to fetch user data.");
             }
-        }
-        fetchProfileData()
+        };
+        fetchUserData()
     }, [])
-
-
+          
     return (
-        <div>
-           {authenticated ? (
-                profileData ? (
+        <div className="profile-container">
+            <div>
+                <h1>Welcome back {userData && userData.username}!</h1>
+
+                {userData && userData.messages && userData.messages.length > 0 ? (
                     <div>
-                        <h1>User Profile</h1>
-                        <p>Username: {profileData.username}</p>
-                    </div>        
+                        <h2>Your Messages</h2>
+                        <ul>
+                            {userData.messages.map((message, index) => (
+                                <li key={index}>
+                                    {message.content} from {message.fromUser.username} regarding {message.post.title}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 ) : (
-                <p>Loading profile data...</p>
-                ) 
-            ) : (
-                <div>
-                    <p>Please log in to view your profile.</p>   
-                    <span>
-                        <Link to="/Login">Click here to log in!</Link>
-                    </span>
-                </div>
-                )
-            }
+                    <p>You have no messages.</p>
+                )}
+
+                {userData && userData.posts && userData.posts.length > 0 ? (
+                    <div>
+                        <h2>Your Posts</h2>
+                        <ul>
+                            {userData.posts.map((post, index) => (
+                                <li key={index}>
+                                    {post.title} - {post.description} 
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ) : (
+                    <p>You have no posts.</p>
+                )}
+
+                {error && <p className="error">{error}</p>}
+                <button onClick={() => navigate('/')}>Go Home</button>
+            </div>        
         </div>
     )
 }
