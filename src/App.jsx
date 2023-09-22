@@ -1,16 +1,20 @@
 import React from "react"
 import { Routes, Route } from 'react-router-dom'
+import { AuthProvider } from "./API/Auth"
 import NavBar from "./components/NavBar"
 import Profile from "./pages/Profile"
 import Posts from "./pages/Posts"
 import Home from "./pages/Home"
-import '../src/assets/App.css'
 import LoginForm from "./components/Login"
 import RegisterForm from "./components/Register"
-import { AuthProvider } from "./API/Auth"
 import CreatePostForm from "./components/AddPost"
 import PostDetails from "./components/PostDetail"
 import MessageForm from "./components/MessageForm"
+import '../src/assets/App.css'
+import '../src/assets/index.css'
+import '../src/assets/NavBar.css'
+import '../src/assets/Auth.css'
+import '../src/assets/Pages.css'
 
 function App() {
 

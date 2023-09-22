@@ -26,7 +26,7 @@ export default function Logout() {
   <div className="logout-container">
     {error && <p className="error">{error}</p>}
     {message && <p className="message">{message}</p> }
-    <button onClick={handleLogout}>Logout</button>
+    <button className='logout-button' onClick={handleLogout}>Logout</button>
   </div>
   )
 }

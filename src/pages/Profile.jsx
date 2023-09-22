@@ -26,45 +26,52 @@ export default function Profile() {
         };
         fetchUserData()
     }, [])
+
+    const messagesToMe = userData && userData.messages.filter(message => message.toUser.username === userData.username) 
+    const messagesFromMe = userData && userData.messages.filter(message => message.fromUser.username === userData.username)
           
     return (
         <div className="profile-container">
             <div className="profile-text">
                 <h1>Welcome back {userData && userData.username}!</h1>
 
-                {userData && userData.messages && userData.messages.length > 0 ? (
-                    <div>
-                        <h2>Your Messages</h2>
-                        <ul>
-                            {userData.messages.map((message, index) => (
-                                <li key={index}>
-                                    {message.content} from {message.fromUser.username} regarding {message.post.title}
-                                </li>
-                            ))}
-                        </ul>
+                <h2>Messages to Me:</h2>
+                {messagesToMe && messagesToMe.length > 0 ? (
+                    <div className="messages-to-me">
+                        {messagesToMe.map((message, index) => (
+                            <div className="message-container" key={index}>
+                                <h3>From: {message.fromUser.username}</h3>
+                                <p>{message.content}</p>
+                                {message.post ? (
+                                    <p>View My Post: <Link to={`/posts/$message.post._id`}>{message.post.title}</Link></p>
+                                ) : (
+                                    <p>(Deleted Post)</p>
+                                )}
+                            </div>
+                        ))}
                     </div>
                 ) : (
                     <p>You have no messages.</p>
                 )}
 
-                {userData && userData.posts && userData.posts.length > 0 ? (
-                    <div>
-                        <h2>Your Posts</h2>
-                        <ul>
-                            {userData.posts.map((post, index) => (
-                                <li key={index}>
-                                    {post.title} - {post.description} 
-                                </li>
-                            ))}
-                        </ul>
+                <h2>Messages from Me:</h2>
+                {messagesFromMe && messagesFromMe.length > 0 ? (
+                    <div className="messages-from-me">
+                        {messagesFromMe.map((message, index) => (
+                            <div className="message-container" key={index}>
+                                <h3>Sent by Me</h3>
+                                <p>{message.content}</p>
+                                <p>Message Again: <Link to={`/posts/${message.post._id}/messages`}>Reply</Link></p>
+                            </div>
+                        ))}
                     </div>
                 ) : (
-                    <p>You have no posts.</p>
+                    <p>You have not sent any messages.</p>
                 )}
 
                 {error && <p className="error">{error}</p>}
                 <button className="custom-button" onClick={() => navigate('/')}>Go Home</button>
-            </div>        
+             </div>
         </div>
     )
 }
