@@ -4,6 +4,7 @@ import SearchBar from "../components/SearchBar";
 import "../assets/Pages.css"
 import api from "../API/ST_API.js"
 import { useAuth } from "../API/Auth";
+import { useNavigate } from 'react-router-dom'
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
@@ -12,12 +13,12 @@ export default function Posts() {
     const [error, setError] = useState('')
 
     const { isLoggedIn } = useAuth()
+    const navigate = useNavigate()
   
 
-    const fetchPosts = async () => {
+    const getAllPosts = async () => {
         try {
             const response = await api.getPosts();
-            console.log('API response:', response.data)
             const postsData = response.data.posts
             setPosts(postsData);
             setFilteredPosts(postsData)
@@ -28,17 +29,28 @@ export default function Posts() {
     };
 
     useEffect(() => {
-       fetchPosts();
+       getAllPosts();
     }, []);
 
     useEffect(() => {
-        const filteredPosts = posts.filter(post =>
-            post.title.includes(searchText) || post.description.includes(searchText))
-            setFilteredPosts(filteredPosts)  
+        const lowercasedSearchText = searchText.toLowerCase()
+        const filtered = posts.filter(post =>
+            post.title.toLowerCase().includes(lowercasedSearchText) || 
+            post.description.toLowerCase().includes(lowercasedSearchText) ||
+            post.author.username.toLowerCase().includes(lowercasedSearchText))
+        setFilteredPosts(filtered)  
     }, [searchText, posts])
 
     const handleSearchChange = (searchText) => {
         setSearchText(searchText)
+    }
+
+    const navigateToPostDetail = (postId) => {
+        navigate(`/posts/${postId}`)
+    }
+
+    const navigateToMessageForm = (post) => {
+        navigate(`/posts/${post._id}/messages`, { state: { post } })
     }
 
     return (
@@ -56,15 +68,17 @@ export default function Posts() {
             {error && <p className="error">{error}</p>}
                 {filteredPosts.map((post) => (
                     <div className="post-card" key={post._id}>
-                        <h2 className="post-title" >{post.title}</h2>
+                        <h2 className="post-title">{post.title}</h2>
                         <p className="post-description" >{post.description}</p>
                         <div className="post-details">
                             <p className="post-price">Price: ${post.price}</p>
                             <p className="post-location">Location: {post.location}</p>
                             <p className="post-user">Seller: {post.author.username} </p>
-                            <Link to={`/post/${post._id}`} className="view-details-button">
-                                View Details
-                            </Link>
+                            {post.isAuthor ? (
+                                <button className="custom-button" onClick={() => navigateToPostDetail(post._id)}>View</button>
+                            ) : (
+                                <button className="custom-button" onClick={() => navigateToMessageForm(post)}>Send Message</button>
+                            )}
                         </div>
                     </div>
                 ))}

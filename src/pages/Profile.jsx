@@ -29,7 +29,7 @@ export default function Profile() {
           
     return (
         <div className="profile-container">
-            <div>
+            <div className="profile-text">
                 <h1>Welcome back {userData && userData.username}!</h1>
 
                 {userData && userData.messages && userData.messages.length > 0 ? (
@@ -63,7 +63,7 @@ export default function Profile() {
                 )}
 
                 {error && <p className="error">{error}</p>}
-                <button onClick={() => navigate('/')}>Go Home</button>
+                <button className="custom-button" onClick={() => navigate('/')}>Go Home</button>
             </div>        
         </div>
     )

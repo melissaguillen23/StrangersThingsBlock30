@@ -65,7 +65,7 @@ export default function UpdatePost() {
     }
 
     return (
-        <div>
+        <div className="edit-post-container">
             <h1>Update Post</h1>
             {error && <p className="error">{error}</p>}
             <form onSubmit={handleUpdatePost}>
@@ -124,8 +124,8 @@ export default function UpdatePost() {
                         required 
                         />
                 </div>
-                <button type="submit">Update Post</button>
             </form>
+            <button type="submit">Update Post</button>
         </div>
     )
 }

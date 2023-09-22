@@ -1,41 +1,55 @@
-import React, { useState } from "react"
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"
 import '../assets/Auth.css'
 import api from '../API/ST_API'
 import { useAuth } from "../API/Auth"; 
 
 export default function LoginForm() {
-    const [loginSuccess, setLoginSuccess] = useState(false)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState("")
     const navigate = useNavigate()
     const { login } = useAuth()
+    const location = useLocation()
+    const logoutMessage = location.state?.message
+    const [displayMessage, setDisplayMessage] = useState(logoutMessage)
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        console.log('Handling login...')
         try {
             const response = await api.login(username, password);
             const token = response.data.token
-            api.setToken(token)
-            login(token)
-            setLoginSuccess(true)
-            console.log('loginSuccess:', loginSuccess)
-            setTimeout(() => setLoginSuccess(false), 3000)
-            console.log('Login successful')
-            navigate("/profile")
-            
+            if (token) {
+                api.setToken(token)
+                login(token)
+                setDisplayMessage("Success: Successfully logged in.")
+                setTimeout(() => {
+                    setDisplayMessage(null)
+                    navigate("/profile")
+                }, 1000)
+            } else {
+                setDisplayMessage("Login Failed: Unable to log in. Please try again.")
+            } 
         } catch (error) {
             console.error(error)
-            setError("Login Failed. Please try again.", error)
-            }
+            setError("Login Failed. Please try again.")
+            setDisplayMessage("Failed: Unable to log in.")
         }
+    }
+
+    useEffect(() => {
+        if (displayMessage) {
+            const timer = setTimeout(() => {
+                setDisplayMessage(null)
+            }, 1000)
+            return () => clearTimeout(timer)
+        }
+    }, [displayMessage])
 
     return (
         <div className="login-container">
-            {loginSuccess && <div className="success-message">Success: Successfully logged in!</div>}
+            {displayMessage && <div className="message">{displayMessage}</div>}
             <div className="login-form">
             <h1>Login</h1>
             {error && <p className="error">{error}</p>}

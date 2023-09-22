@@ -7,8 +7,7 @@ export default function RegisterForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-
+    const [message, setMessage] = useState(null)
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth()
 
@@ -16,17 +15,24 @@ export default function RegisterForm() {
         e.preventDefault();
 
         if(password !== passwordConfirmation) {
-            setErrorMessage("Passwords do not match!")
+            setMessage("Passwords do not match!")
             return;
         }
 
         try {
             const response = await api.registerUser(username, password, passwordConfirmation);
-            console.log(response);
-            
+            if (response && response.success) {
+                setMessage("Success: Registration successful. Please log in.")
+                setTimeout(() => {
+                    setMessage(null)
+                    navigate("/login")
+                }, 1000)
+            } else {
+                setMessage("Registration Failed: Please try again.")
+            }
         } catch (error) {
             console.error(error);
-            setErrorMessage("Registration failed. Please try again.")
+            setMessage("Failed: Unable to register.")
         }
     }
 
@@ -38,6 +44,7 @@ export default function RegisterForm() {
 
     return (
         <div className="register-container">
+                {message && <p className="message">{message}</p> }
             <div className="register-form">
                 <h1>Registration Form</h1>
                 <form onSubmit={handleRegister}>
@@ -73,7 +80,6 @@ export default function RegisterForm() {
                     />
                     <button type="submit">Sign Up!</button>
                 </form>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
             </div>
         </div>
     )

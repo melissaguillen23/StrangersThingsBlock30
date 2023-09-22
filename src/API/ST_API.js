@@ -89,10 +89,6 @@ class ST_API {
     async getPosts() {
         return await this._fetch('/posts', 'GET');
     }
-
-    async getPostById(postId) {
-        return await this._fetch(`/posts/${postId}`, 'GET')
-    }
     
     async createPost(postInfo) {
         const data = {

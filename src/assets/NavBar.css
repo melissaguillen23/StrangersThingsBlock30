@@ -6,10 +6,11 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #A2678A;
+  background: radial-gradient(circle, #643843, #99627A );
   color: white;
   position: sticky;
   top: 0;
+  z-index: 1000;
 }
 
 nav .title {

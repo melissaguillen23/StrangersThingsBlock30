@@ -1,10 +1,3 @@
-body {
-    background-image: url('src/assets/strangersthingsbg.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-}
-
 /* Home Page */
 
 .home-container {
@@ -36,22 +29,6 @@ body {
     margin-bottom: 1rem;
 }
 
-.home-text button {
-    background-color: #FFCACC;
-    color: black;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 16px;
-    margin-bottom: 16px;
-}
-
-.home-text button:hover {
-    background-color: #FFAABB;
-}
-
 /* Posts Page */
 
 .posts-container {
@@ -61,10 +38,9 @@ body {
 
 .post-header {
     display: flex;
-    align-items: center;
     justify-content: center;
-    min-height: 15vh;
-    background: rgba(0, 0, 0, 0.1);
+    align-items: center;
+    min-height: 10vh;
 }
 
 .add-post-link {
@@ -73,21 +49,13 @@ body {
 
 .posts-title {
     font-size: 50px;
-    color: white;
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    text-shadow: 
-        -1px -1px 0 black,
-        1px -1px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black;
+    color: black;
     font-weight: bold;
-    margin: 0;
+    margin: 2rem;
 }
 
 .add-post {
     padding: 0.5rem;
-    margin-left: 5rem;
     color: white;
     border: 1px solid white;
     text-decoration: none;
@@ -102,7 +70,6 @@ body {
 
 .search-bar-input {
     padding: 0.5rem;
-    margin-right: 5rem;
     border: 1px solid white;
     background-color: rgba(151, 108, 132, 0.5);
     border-radius: 4px;
@@ -110,13 +77,37 @@ body {
 }
 
 input[type="text"]::placeholder {
-    color: rgba(49, 48, 48, 0.635);
+    color: rgba(255, 254, 254, 0.834);
 }
 
 .post-card-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .post-card-container {
+        grid-template-columns: 1fr;
+    }
+    .posts-container {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .post-header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .search-bar-input, .add-post-link, .post-title {
+        width: 100%;
+        margin: 0;
+    }
 }
 
 .post-card {
@@ -126,8 +117,7 @@ input[type="text"]::placeholder {
     width: 100%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
-    background-color: rgba(151, 108, 132, 0.589);
-    backdrop-filter: blur(5px) brightness(120%);
+    background: radial-gradient(circle, #643843, #99627A );
     gap: 1rem;
 }
 
@@ -140,7 +130,6 @@ input[type="text"]::placeholder {
     color: white;
     margin-bottom: 10px;
     font-weight: bold;
-    font-family: 'Trebuchet MS';
 }
 
 .post-description {
@@ -173,21 +162,6 @@ input[type="text"]::placeholder {
     margin-bottom: 25px;
 }
 
-.view-details-button {
-    padding: 0.5rem;
-    color: white;
-    border: 1px solid white;
-    text-decoration: none;
-    background-color: rgba(151, 108, 132, 0.5);
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    margin-bottom: 16px;
-}
-
-.add-post:hover {
-    background-color: rgba(255, 255, 255, 0.845);
-}
-
 @media screen and (max-width: 768px) {
     .post-card {
         flex-basis: calc(33.33% - 20px);
@@ -196,8 +170,181 @@ input[type="text"]::placeholder {
 
 /* Profile Page */
 
-.profile-title {
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.profile-container h1 {
     font-size: 50px;
+    color: black;
+    font-weight: bold;
+    margin: 0;
+}
+
+.profile-text {
+    background-color: #FFCACC(120, 9%, 55%, 0.5);
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    position: relative;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     margin-bottom: 1rem;
 }
 
+.profile-container p {
+    margin: 5px;
+}
+
+/* Add Post Form */
+
+.post-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.post-form {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.post-form h1 {
+    margin-bottom: 0.5rem;
+}
+
+.post-form label {
+    display: block;
+    margin-bottom: 0.2rem;
+    font-size: 18px;
+}
+
+.post-form-checkbox {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.post-form button {
+    text-align: center;
+    display: block;
+}
+
+.post-form input[type="text"],
+.post-form input[type="number"],
+.post-form input[type="password"],
+.post-form textarea[id="description"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 5px;
+    margin-bottom: 1rem;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: rgba(255, 255, 255, 0.574);
+}
+
+/* Message Form */
+
+.message-form-container {
+    margin: 0 auto;
+    padding: 30px;
+}
+
+.message-post-details {
+    border: 1px solid white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(circle, #643843, #99627A );
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.message-post-details h2, 
+.message-post-details h3, 
+.message-post-details p {
+    margin: 10px;
+}
+
+.message-form {
+    background: radial-gradient(circle, #643843, #99627A );
+    border: 1px solid white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+.message-form h3,
+.message-form form,
+.message-form button {
+    margin: 10px;
+
+}
+
+.message-form textarea {
+    padding: 50px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+}
+
+#description::placeholder {
+    color: black;
+    opacity: 1;
+}
+
+/* View Post Details */
+
+.post-detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(circle, #643843, #99627A );
+    flex-direction: column;
+    margin: 15px;
+}
+
+.post-details-container h2,
+.post-detail-container h3, 
+.post-detail-container p {
+    margin: 20px;
+}
+
+.post-detail-container button {
+    text-align: center;
+    display: block;
+}
+
+.post-detail {
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 15px;
+}

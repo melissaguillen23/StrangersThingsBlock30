@@ -30,8 +30,8 @@ export default function Home() {
            <div className="home-text">
                 <h1>Welcome to Stranger's Things</h1>
                 <h2>Welcome, {userData && userData.username ? userData.username : "Guest"}</h2>
-                { isLoggedIn && <button onClick={handleViewProfile}>View Profile</button> }
-                { !isLoggedIn && <button onClick={() => navigate('/login')}>Go to Login page</button> }
+                { isLoggedIn && <button className="custom-button" onClick={handleViewProfile}>View Profile</button> }
+                { !isLoggedIn && <button className="custom-button" onClick={() => navigate('/login')}>Go to Login page</button> }
            </div>
         </div>
     )
