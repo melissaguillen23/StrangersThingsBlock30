@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import api from "../API/ST_API"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../API/Auth";
 
 export default function Profile() {
@@ -27,13 +27,13 @@ export default function Profile() {
         fetchUserData()
     }, [])
 
-    const messagesToMe = userData && userData.messages.filter(message => message.toUser.username === userData.username) 
+    const messagesToMe = userData && userData.messages.filter(message => message.fromUser.username !== userData.username) 
     const messagesFromMe = userData && userData.messages.filter(message => message.fromUser.username === userData.username)
-          
+
     return (
         <div className="profile-container">
             <div className="profile-text">
-                <h1>Welcome back {userData && userData.username}!</h1>
+                <h1>Welcome back {userData ? userData.username : ''}!</h1>
 
                 <h2>Messages to Me:</h2>
                 {messagesToMe && messagesToMe.length > 0 ? (
@@ -43,7 +43,7 @@ export default function Profile() {
                                 <h3>From: {message.fromUser.username}</h3>
                                 <p>{message.content}</p>
                                 {message.post ? (
-                                    <p>View My Post: <Link to={`/posts/$message.post._id`}>{message.post.title}</Link></p>
+                                    <p>View My Post: <Link to={`/posts/${message.post._id}`}>{message.post.title}</Link></p>
                                 ) : (
                                     <p>(Deleted Post)</p>
                                 )}

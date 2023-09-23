@@ -13,8 +13,8 @@ export default function PostDetails() {
       const fetchPostDetails = async () => {
         try {
           const response = await api.getPosts()
-          const PostDetail = response.data.posts.find(p => p._id === postId)
-            setPost(PostDetail)
+          const specificPost = response.data.posts.find(p => p._id === postId)
+            setPost(specificPost)
         } catch (error) {
           console.error("Error fetching post details:", error)
         }
@@ -22,31 +22,15 @@ export default function PostDetails() {
 
       fetchPostDetails()
     }, [postId])
- 
-    const handleDelete = async () => {
-        try {
-            await api.deletePost(post._id)
-            navigate('/posts')
-        } catch (error) {
-            console.error("Error deleting post:", error)
-        }
-    }
 
-    const handleEdit = async () => {
-        try {
-            const updatedInfo = {
-                title: post.title,
-                description: post.description,
-                price: post.price,
-                location: post.location,
-                willDeliver: false
-            }
-            await api.updatePost(post._id, updatedInfo)
-            navigate('/posts')
-        } catch (error) {
-            console.error("Error editing post:", error)
-        }
-    }
+    const handleDelete = async () => {
+      try {
+        await api.deletePost(post._id)
+        navigate('/posts')
+      } catch (error) {
+        console.error("Error deleting post:", error)
+      }
+   }
 
     if (!post) {
         return <div>Loading...</div>
@@ -59,8 +43,8 @@ export default function PostDetails() {
       <p>{post.description}</p>
       {post.isAuthor && isLoggedIn && (
         <>
-        <button className='custom-button' onClick={handleEdit}>Edit</button>
-        <button  className='custom-button' onClick={handleDelete}>Delete</button>
+        <button className='custom-button' onClick={() => navigate(`/update-post/${post._id}`)}>Edit</button>
+        <button className='custom-button' onClick={handleDelete}>Delete</button>
         </>
       )}
       <div>

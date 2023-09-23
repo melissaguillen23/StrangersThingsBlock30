@@ -50,6 +50,15 @@ class ST_API {
     
         return result;
     }
+
+    async sendMessage(postId, messageContent) {
+        const data = {
+            message: {
+                content: messageContent,
+            },
+        };
+        return await this._fetch(`/posts/${postId}/messages`, 'POST', data);
+    }
     
     async registerUser(username, password, passwordConfirmation) {
         const data = {

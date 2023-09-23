@@ -4,22 +4,22 @@ import { useAuth } from "../API/Auth";
 import api from '../API/ST_API'
 
 
-export default function UpdatePost() {
+export default function DeletePost() {
     const { isLoggedIn } = useAuth()
     const { postId } = useParams()
     const navigate = useNavigate()
     const [error, setError] = useState('')
 
     if (!isLoggedIn) {
-        return navigate('/login')
+        navigate('/login')
+        return null
     }
 
     const handleDeletePost = async () => {
         if(window.confirm("Are you sure you want to delete this post?")) {
            try {
-            const response = await api.deletePost('token', postId)
-            console.log(response)
-            navigate('/post')
+            await api.deletePost(postId)
+            navigate('/posts')
             } catch (error) {
                 console.error('Error deleting post:', error)
                 setError('Error deleting the post. Please try again.')

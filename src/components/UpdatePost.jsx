@@ -1,15 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../API/Auth";
 import api from "../API/ST_API";
 
 
 export default function UpdatePost() {
-    const { isLoggedIn } = useAuth()
     const { postId } = useParams()
     const navigate = useNavigate()
     const [post, setPost] = useState(null)
-    const [error, setError] = useState('')
     const [updatePostInfo, setUpdatePostInfo] = useState({
         title: '',
         description: '',
@@ -18,22 +15,18 @@ export default function UpdatePost() {
         willDeliver: false,
     })
 
-    if (!isLoggedIn) {
-        return navigate('/login')
-    }
-
-    const fetchPostDetails = async () => {
-        try {
-            const response = await api.getPostById('token', postId)
-            setPost(response.data)
-            setUpdatePostInfo(response.data)
-        } catch (error) {
-            console.error('Error fetching post details:', error)
-            setError("Failed to fetch post details.")
-        }
-    }
-
     useEffect(() => {
+        const fetchPostDetails = async () => {
+            try {
+                const response = await api.getPosts()
+                const specificPost = response.data.posts.find(p => p._id === postId)
+                    setPost(specificPost)
+                    setUpdatePostInfo(specificPost)
+            } catch (error) {
+                console.error('Error fetching post details:', error)
+            }
+        }
+        
         fetchPostDetails()
     }, [postId])
 
@@ -41,12 +34,10 @@ export default function UpdatePost() {
         e.preventDefault()
 
         try {
-            const response = await api.updatePost('token', postId, updatePostInfo)
-            console.log('Post updated:', response)
+            await api.updatePost(postId, updatePostInfo)
             navigate(`/post/${postId}`)
         } catch (error) {
             console.error('Error updating post:', error)
-            setError("Failed to update post.")
         }
     }
 
@@ -67,7 +58,6 @@ export default function UpdatePost() {
     return (
         <div className="edit-post-container">
             <h1>Update Post</h1>
-            {error && <p className="error">{error}</p>}
             <form onSubmit={handleUpdatePost}>
                 <div>
                     <label htmlFor="title">Title:</label>
@@ -119,13 +109,12 @@ export default function UpdatePost() {
                         id="willDeliver"
                         name="willDeliver"
                         checked={updatePostInfo.willDeliver}
-                        value={updatePostInfo.willDeliver}
                         onChange={handleInputChange}
-                        required 
                         />
                 </div>
+                <button type="submit">Update Post</button>
             </form>
-            <button type="submit">Update Post</button>
+            
         </div>
     )
 }

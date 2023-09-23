@@ -15,6 +15,7 @@ import '../src/assets/index.css'
 import '../src/assets/NavBar.css'
 import '../src/assets/Auth.css'
 import '../src/assets/Pages.css'
+import UpdatePost from "./components/UpdatePost"
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/posts/:postId" element={<PostDetails />} />
           <Route path="/posts/:postId/messages" element={<MessageForm />} />
+          <Route path="/update-post/:postId" element={<UpdatePost />} />
         </Routes>
     </AuthProvider>
   )

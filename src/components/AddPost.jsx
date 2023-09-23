@@ -96,8 +96,9 @@ export default function CreatePostForm() {
                   onChange={e => setPostDetails({...postDetails, willDeliver: e.target.checked})}
                 />
             </div> 
-            </form>
             <button className="custom-button" type="submit">Create Post</button>
+            </form>
+            
       </div>
     </div>    
   )
