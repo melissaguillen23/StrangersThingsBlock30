@@ -29,7 +29,7 @@ export default function CreatePostForm() {
         setTimeout(() => {
           setMessage('')
           navigate('/posts')
-        }, 1000)
+        }, 3000)
       } catch (error) {
         console.error('Error creating post:', error);
         setMessage("Failed to create post.")
@@ -37,8 +37,8 @@ export default function CreatePostForm() {
     }
 
   return (
-    <div className='post-form-container'>
-      <div className='post-form'>
+    <div className='form-container'>
+      <div className='form'>
       <h1>Create Post</h1>
       {message && <p className='message'>{message}</p>}
           <form onSubmit={handleSubmit}>
@@ -85,7 +85,7 @@ export default function CreatePostForm() {
                   required 
                 />
             </div>
-            <div className='post-form-checkbox'>
+            <div className='form-checkbox'>
               <label htmlFor="willDeliver">Will Deliver:</label>
                 <input 
                   type="checkbox"
@@ -97,6 +97,7 @@ export default function CreatePostForm() {
                 />
             </div> 
             <button className="custom-button" type="submit">Create Post</button>
+            <button className='custom-button' onClick={() => navigate(-1)}>Back</button>
             </form>
             
       </div>

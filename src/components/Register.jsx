@@ -26,7 +26,7 @@ export default function RegisterForm() {
                 setTimeout(() => {
                     setMessage(null)
                     navigate("/login")
-                }, 1000)
+                }, 3000)
             } else {
                 setMessage("Registration Failed: Please try again.")
             }
@@ -43,9 +43,9 @@ export default function RegisterForm() {
     }, [isLoggedIn, navigate]);
 
     return (
-        <div className="register-container">
+        <div className="form-container">
                 {message && <p className="message">{message}</p> }
-            <div className="register-form">
+            <div className="form">
                 <h1>Registration Form</h1>
                 <form onSubmit={handleRegister}>
                     <label htmlFor="username">Username: </label>
@@ -78,7 +78,7 @@ export default function RegisterForm() {
                         placeholder="confirm password"
                         required
                     />
-                    <button type="submit">Sign Up!</button>
+                    <button className="custom-button" type="submit">Sign Up!</button>
                 </form>
             </div>
         </div>

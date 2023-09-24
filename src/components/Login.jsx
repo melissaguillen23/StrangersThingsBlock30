@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom"
-import '../assets/Auth.css'
 import api from '../API/ST_API'
 import { useAuth } from "../API/Auth"; 
 
@@ -17,6 +16,7 @@ export default function LoginForm() {
 
     const handleLogin = async (e) => {
         e.preventDefault()
+
         try {
             const response = await api.login(username, password);
             const token = response.data.token
@@ -27,14 +27,24 @@ export default function LoginForm() {
                 setTimeout(() => {
                     setDisplayMessage(null)
                     navigate("/profile")
-                }, 1000)
+                }, 2000)
             } else {
-                setDisplayMessage("Login Failed: Unable to log in. Please try again.")
+                const serverErrorMessage = response.data.error || "Login Failed: Unable to log in. Please try again."
+                setError(serverErrorMessage)
+                setUsername('')
+                setPassword('')
+                setTimeout(() => {
+                    setError(null)
+                }, 2000)
             } 
         } catch (error) {
             console.error(error)
             setError("Login Failed. Please try again.")
-            setDisplayMessage("Failed: Unable to log in.")
+            setUsername('')
+                setPassword('')
+                setTimeout(() => {
+                    setError(null)
+                }, 2000)
         }
     }
 
@@ -42,17 +52,17 @@ export default function LoginForm() {
         if (displayMessage) {
             const timer = setTimeout(() => {
                 setDisplayMessage(null)
-            }, 1000)
+            }, 2000)
             return () => clearTimeout(timer)
         }
     }, [displayMessage])
 
     return (
-        <div className="login-container">
+        <div className="form-container">
             {displayMessage && <div className="message">{displayMessage}</div>}
-            <div className="login-form">
+            <div className="form">
             <h1>Login</h1>
-            {error && <p className="error">{error}</p>}
+            {error && <p className="message">{error}</p>}
             <form onSubmit={handleLogin}>
                 <div>
                     <label htmlFor="username">Username:</label>
@@ -78,7 +88,7 @@ export default function LoginForm() {
                         minLength="8"
                     />
                 </div>
-                 <button type="submit">Log in!</button>
+                 <button className="custom-button" type="submit">Log in!</button>
                  <div>
                     <span>
                         New Here? <Link to="/Register">Create an Account</Link>

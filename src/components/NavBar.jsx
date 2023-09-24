@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logout from "./Logout"
-import '../assets/NavBar.css' 
 import { useAuth } from "../API/Auth";
 
 export default function NavBar() {
@@ -25,11 +24,18 @@ export default function NavBar() {
                 <li>
                     <NavLink to="/posts">Posts</NavLink>
                 </li>
+                { !isLoggedIn && (
+                  <li>
+                    <NavLink to="/register">Register</NavLink>
+                 </li>  
+                )}
+                
                 { isLoggedIn ?
                 (<>
                     <li>
                         <NavLink to="/profile">Profile</NavLink>
                     </li>
+                    <div className="vertical-divider"></div>
                     <li>
                         <Logout />
                     </li>

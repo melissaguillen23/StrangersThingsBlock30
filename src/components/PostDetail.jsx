@@ -37,20 +37,43 @@ export default function PostDetails() {
     }
 
   return (
-    <div className='post-detail-container'>
-      <div className='post-detail'>
-      <h2>{post.title}</h2>
-      <p>{post.description}</p>
-      {post.isAuthor && isLoggedIn && (
-        <>
-        <button className='custom-button' onClick={() => navigate(`/update-post/${post._id}`)}>Edit</button>
-        <button className='custom-button' onClick={handleDelete}>Delete</button>
-        </>
+    <>
+    <div className='post-container'>
+      <div className='post-card'>
+        <h2>{post.title}</h2>
+        <p>Description: {post.description}</p>
+        <h3>Price: ${post.price}</h3>
+        <p>Location: {post.location}</p>
+      </div>
+
+      <div className="post-vertical-divider"></div>
+
+      {isLoggedIn && post.isAuthor && (
+        <div className="post-messages">
+          <h2>Messages regarding this post:</h2>
+          {post.messages && post.messages.length > 0 ? (
+            post.messages.map((message, index) => (
+              <div key={index}>
+                <p><strong>From:</strong>{message.senderName}</p>
+                <p>{message.content}</p>
+              </div>
+            ))
+          ) : (
+            <p>No messages for this post yet.</p>
+          )}
+        </div>
       )}
-      <div>
-        <h3>Messages regarding this post:</h3>
-      </div>
-      </div>
     </div>
+
+    <div className='post-buttons'>
+    {post.isAuthor && isLoggedIn && (
+      <>
+        <button className="custom-button" onClick={() => navigate(`/update-post/${post._id}`)}>Edit</button>
+        <button className="custom-button" onClick={handleDelete}>Delete</button>
+        <button className="custom-button" onClick={() => navigate(-1)}>Back</button>
+      </>
+    )}
+    </div>
+</>
   )
 }

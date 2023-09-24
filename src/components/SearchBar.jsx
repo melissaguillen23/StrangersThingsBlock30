@@ -13,16 +13,23 @@ export default function SearchBar({ onSearch }) {
         }
     };
 
+    const handleClearSearch = () => {
+        setSearchText('')
+        onSearch('')
+    }
+
 return (
     <div className="search-container">
         <input 
           type="text"
-          placeholder="Search posts"
+          placeholder="Search for posts..."
           value={searchText}
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
           className="search-bar-input"
         />
+        {searchText && <button onClick={handleClearSearch} className="clear-button">X</button>}
+        <button onClick={() => onSearch(searchText)} className="search-button">Search</button>
     </div>
     );
 } 

@@ -11,10 +11,6 @@ import CreatePostForm from "./components/AddPost"
 import PostDetails from "./components/PostDetail"
 import MessageForm from "./components/MessageForm"
 import '../src/assets/App.css'
-import '../src/assets/index.css'
-import '../src/assets/NavBar.css'
-import '../src/assets/Auth.css'
-import '../src/assets/Pages.css'
 import UpdatePost from "./components/UpdatePost"
 
 function App() {

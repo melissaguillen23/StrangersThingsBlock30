@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import SearchBar from "../components/SearchBar";
-import "../assets/Pages.css"
 import api from "../API/ST_API.js"
 import { useAuth } from "../API/Auth";
 import { useNavigate } from 'react-router-dom'
+import Modal from "../components/Modal";
 
 export default function Posts() {
     const [posts, setPosts] = useState([]);
     const [filteredPosts, setFilteredPosts] = useState([])
     const [searchText, setSearchText] = useState("")
     const [error, setError] = useState('')
-
+    const [isModalOpen, setModalOpen] = useState(false)
     const { isLoggedIn } = useAuth()
     const navigate = useNavigate()
   
@@ -50,12 +50,16 @@ export default function Posts() {
     }
 
     const navigateToMessageForm = (post) => {
-        navigate(`/posts/${post._id}/messages`, { state: { post } })
+        if (!isLoggedIn) {
+            setModalOpen(true)
+        } else {
+            navigate(`/posts/${post._id}/messages`, { state: { post } })
+        }
     }
 
     return (
         <div className="posts-container">
-            <div className="post-header">
+            <div className="posts-header">
                 <SearchBar onSearch={handleSearchChange} />
                 <h1 className="posts-title" >Posts</h1>
                 { isLoggedIn && (
@@ -64,10 +68,10 @@ export default function Posts() {
                     </Link> 
                 )}  
             </div>
-            <div className="post-card-container">
-            {error && <p className="error">{error}</p>}
+            <div className="posts-card-container">
+            {error && <p className="message">{error}</p>}
                 {filteredPosts.map((post) => (
-                    <div className="post-card" key={post._id}>
+                    <div className="posts-card" key={post._id}>
                         <h2 className="post-title">{post.title}</h2>
                         <p className="post-description" >{post.description}</p>
                         <div className="post-details">
@@ -83,6 +87,10 @@ export default function Posts() {
                     </div>
                 ))}
             </div>
+            <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+                <p>Please log in to send a message.</p>
+                <p>If you don't have an account with us yet, you can <Link to="/register">register here</Link>.</p>
+            </Modal>
         </div>
     )
 }

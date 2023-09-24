@@ -7,6 +7,7 @@ export default function UpdatePost() {
     const { postId } = useParams()
     const navigate = useNavigate()
     const [post, setPost] = useState(null)
+    const [displayMessage, setDisplayMessage] = useState('')
     const [updatePostInfo, setUpdatePostInfo] = useState({
         title: '',
         description: '',
@@ -35,7 +36,10 @@ export default function UpdatePost() {
 
         try {
             await api.updatePost(postId, updatePostInfo)
-            navigate(`/post/${postId}`)
+            setDisplayMessage('Post successfully updated!')
+            setTimeout(() => {
+                setDisplayMessage('')
+            }, 3000)
         } catch (error) {
             console.error('Error updating post:', error)
         }
@@ -56,7 +60,9 @@ export default function UpdatePost() {
     }
 
     return (
-        <div className="edit-post-container">
+        <div className="form-container">
+            {displayMessage && <div className="message">{displayMessage}</div>}
+            <div className="form">
             <h1>Update Post</h1>
             <form onSubmit={handleUpdatePost}>
                 <div>
@@ -102,7 +108,7 @@ export default function UpdatePost() {
                         required 
                         />
                 </div>
-                <div>
+                <div className="form-checkbox">
                     <label htmlFor="willDeliver">Will Deliver:</label>
                     <input 
                         type="checkbox"
@@ -112,9 +118,11 @@ export default function UpdatePost() {
                         onChange={handleInputChange}
                         />
                 </div>
-                <button type="submit">Update Post</button>
+                <button className='custom-button' type="submit">Update Post</button>
+                <button className='custom-button' onClick={() => navigate(-1)}>Back</button>
+
             </form>
-            
+            </div>    
         </div>
     )
 }

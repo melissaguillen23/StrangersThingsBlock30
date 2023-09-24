@@ -1,1 +1,477 @@
+/* Global Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Trebuchet MS';
+}
 
+body {
+    background-image: url('/src/assets/strangersthingsbg.jpg');
+    backdrop-filter: blur(4px);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+/* Custom Styles */
+.custom-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #643843;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-button:hover {
+    background-color: #99627A;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #A2678A;
+    color: white;
+    padding: 15px;
+    border-radius: 4px;
+    z-index: 8;
+}
+
+/* Forms Styles */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 30vh;
+}
+
+.form {
+    width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+.form h1, .form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form input[type="text"],
+.form input[type="number"],
+.form input[type="password"],
+.form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.form-checkbox {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.form button.custom-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #643843;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form button.custom-button:hover {
+    background-color: #99627A;
+}
+
+.form span {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+/* Navbar Styles */
+.active {
+    background-color: #3F1D38;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: radial-gradient(circle, #643843, #99627A);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 10px 20px;
+}
+
+nav .title {
+    font-size: 1.5rem;
+    margin: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+}
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    list-style: none;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:not(.active):hover {
+    background-color: #E19898;
+}
+
+.vertical-divider {
+    border-left: 1px solid #000;
+    height: 20px;
+    margin: 0 10px;
+}
+
+nav .menu {
+    display: none;
+    position: absolute;
+    top: 0.75rem;
+    right: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.25rem;
+    height: 2rem;
+}
+
+nav .menu span {
+    height: 0.4rem;
+    width: 100%;
+    background-color: #3F1D38;
+    border-radius: 0.2rem;
+}
+
+@media (max-width: 480px) {
+    nav .menu {
+        display: flex;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 0.25rem;
+    }
+
+    nav ul.open {
+        display: flex;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        margin: 0.2rem 0.5rem;
+    }
+}
+
+/* Post Page */
+
+.posts-container {
+    margin-left: 8rem;
+    margin-right: 8rem;
+}
+
+.posts-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 10vh;
+}
+
+.add-post-link {
+    text-decoration: none;
+    
+}
+
+.posts-title {
+    font-size: 50px;
+    color: black;
+    font-weight: bold;
+    margin: 2rem;
+}
+  
+.add-post {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #643843;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+  
+.add-post:hover {
+    background-color: #99627A;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    padding: 5px;
+}
+  
+.search-bar-input {
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ffffff57;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+
+.search-bar-input[type="text"]::placeholder {
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+}
+  
+.clear-button, .search-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #643843;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+  
+.clear-button:hover, .search-button:hover {
+    background-color: #99627A;
+}
+
+.posts-card-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.posts-card {
+    border: 1px solid white;
+    border-radius: 8px;
+    width: 100%;
+    padding: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(4px);
+}
+  
+.posts-card:hover {
+    transform: translateY(-5px);
+}
+
+.posts-card h2,
+.posts-card p {
+    margin: 10px 0;
+}
+
+/* Post Details Page */
+.post-container {
+    display: flex;
+    min-height: 10vh;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+}
+
+.post-card, .post-messages {  
+    padding: 20px;
+}
+
+.post-card h2, .post-messages h2, 
+.post-card h3, .post-messages h3,
+.post-card p, .post-messages p {
+    margin: 10px 0;
+}
+
+
+.post-vertical-divider {
+    border-left: 3px solid #00000015;
+    height: 100px;
+}
+
+.post-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+}
+
+.post-buttons button.custom-button {
+    margin: 0;
+}
+
+/* Profile Page */
+.profile-container {
+    margin-left: 8rem;
+    margin-right: 8rem;
+    text-align: center;
+}
+
+.profile-container h1 {
+    font-size: 50px;
+}
+.message-box {
+   display: flex;
+   justify-content: space-between;
+   gap: 20px;
+}
+
+.messages-in, .messages-out {
+    flex: 1;
+    border: 1px solid white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    backdrop-filter: blur(4px);
+    text-align: justify;
+    background-color: #643843;
+}
+
+.messages-in h2, .messages-out h2 {
+    font-size: 30px;
+}
+
+.messages-in h2, .messages-out h2,
+.messages-in h3, .messages-out h3,
+.messages-in p, .messages-out p {
+    margin: 10px 0;;
+}
+
+.message-container {
+    flex: 1;
+    border-bottom: 1px solid white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    text-align: justify;
+    background-color: rgba(255, 255, 255, 0.693);
+    margin: 10px 0;
+}
+
+/* Home Page */
+
+.home-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    text-align: center;
+}
+
+.home-container h1 {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.home-container h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    position: relative;
+}
+
+.modal-content button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #643843;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    width: 90px;
+    height: 30px;
+    cursor: pointer;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .form {
+        width: 90%;
+    }
+}
